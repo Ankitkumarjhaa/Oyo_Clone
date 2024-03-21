@@ -2,23 +2,45 @@
 import Head from "next/head";
 import { useState } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 
 const Login = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [login, setLogin] = useState(true);
+  const [login, setLogin] = useState(false);
 
   const router = useRouter();
 
-  const handleSignup = async () => {};
+  const handleSignup = async () => {
+    const res = await axios.post(`/api/user/register`, {
+      name,
+      email,
+      password,
+    });
+    if (res?.data) {
+      Cookies.set("user", res.data.token, { expires: 7 });
+      alert(res.data.msg);
+      router.back();
+    }
+  };
 
   const handleToggle = () => {
     setLogin(!login);
   };
 
-  const handleLogin = async () => {};
+  const handleLogin = async () => {
+    const res = await axios.post(`/api/user/login`, {
+      email,
+      password,
+    });
+    if (res?.data) {
+      Cookies.set("user", res.data.token, { expires: 7 });
+      alert(res.data.msg);
+      router.back();
+    }
+  };
 
   return (
     <div>
@@ -87,7 +109,10 @@ const Login = () => {
                     ? "Don`t have an account ?"
                     : "Already have an account ?"}
                 </span>
-                <span className=" ml-1 border-b-2 border-red-500 text-red-600 pb-1 hover:cursor-pointer">
+                <span
+                  className=" ml-1 border-b-2 border-red-500 text-red-600 pb-1 hover:cursor-pointer"
+                  onClick={handleToggle}
+                >
                   {" "}
                   {login ? "Sign Up" : "Login"}
                 </span>

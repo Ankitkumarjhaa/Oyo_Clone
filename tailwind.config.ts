@@ -11,7 +11,7 @@ module.exports = {
         "login-background":'url("/background.avif")'
       },
       height:{
-        'large-box':'400px'
+        'large-box':'350px'
       }
     },
   },
