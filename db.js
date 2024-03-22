@@ -1,9 +1,22 @@
 import mongoose from "mongoose";
-const URI = "mongodb+srv://ankitjha:ankitjha@cluster0.hmkgosd.mongodb.net/OYO?retryWrites=true&w=majority&appName=Cluster0"
-const connectDb = async()=>{
-await mongoose.connect(URI);
-console.log("Database Connected Successfully");
-}
 
+const URI = process.env.MONGO_URI;
 
-export default connectDb;
+let cachedDB = null;
+
+const connectDB = async () => {
+  if (cachedDB) {
+    return cachedDB;
+  } else {
+    try {
+      const newDB = await mongoose.connect(URI);
+      cachedDB = newDB;
+      return newDB;
+    } catch (error) {
+      console.error("Error connecting to MongoDB:", error);
+      throw error;
+    }
+  }
+};
+
+export default connectDB;

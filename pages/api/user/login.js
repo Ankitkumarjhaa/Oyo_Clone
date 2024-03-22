@@ -19,7 +19,7 @@ export default async function handler(req, res) {
       emailExists.password
     );
     if (passwordMatched) {
-      const token = jwt.sign({ token: emailExists._id }, "secret", {
+      const token = jwt.sign({ token: emailExists._id }, process.env.JWT_SECRET, {
         expiresIn: "30d",
       });
       return res.status(200).json({ msg: "Logged in successfully !", token });

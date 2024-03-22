@@ -1,13 +1,21 @@
 "use client";
 import Head from "next/head";
 import Image from "next/image";
+import Cookies from "js-cookie";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const SingleHotel = ({ hotel }) => {
   const [auth, setAuth] = useState(false);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const cookie = Cookies.get("user");
+    if (cookie) {
+      setAuth(true);
+      return;
+    }
+    setAuth(false);
+  }, []);
 
   return (
     <>
@@ -71,3 +79,16 @@ const SingleHotel = ({ hotel }) => {
     </>
   );
 };
+
+export async function getServerSideProps(ctx) {
+  const res = await fetch(`${process.env.BASE_URL}/api/hotels/${ctx.query.id}`);
+  const data = await res.json();
+
+  return {
+    props: {
+      hotel: data.hotel,
+    },
+  };
+}
+
+export default SingleHotel;
