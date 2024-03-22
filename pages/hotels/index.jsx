@@ -1,6 +1,6 @@
 import Filters from "@/Components/Filters";
 import Header1 from "@/Components/Header1";
-import Hotel from "@/Components/Hotel";
+import Hotel from "@/Components/hotel";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
