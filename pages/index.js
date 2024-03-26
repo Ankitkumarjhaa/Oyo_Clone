@@ -1,8 +1,8 @@
-import Footer from "@/components/Footer";
-import Header1 from "@/components/Header1";
-import Header2 from "@/components/Header2";
+import Footer from "@/Components/Footer";
+import Header1 from "@/Components/Header1";
+import Header2 from "@/Components/Header2";
 import Header3 from "@/Components/Header3";
-import Header4 from "@/components/Header4";
+import Header4 from "@/Components/Header4";
 import Head from "next/head";
 import Image from "next/image";
 
