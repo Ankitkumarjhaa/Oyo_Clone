@@ -3,10 +3,13 @@ import Block from "./Block";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 
 const Header1 = () => {
   const [auth, setAuth] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
     const key = Cookies.get("user");
@@ -25,53 +28,85 @@ const Header1 = () => {
     router.push("/");
   };
 
+  const handleMenu = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
   return (
-    <div className="flex flex-col sm:flex-row justify-between border-b-2 border-gray-300 items-center px-5 py-4">
-      <div className="flex items-center mb-4 sm:mb-0">
+    <nav className="p-3 flex bg-white justify-between items-center relative top-0 left-0 right-0 z-20 shadow-md rounded-md object-cover">
+      <div className="flex gap-2 items-center flex-1">
         <Image
           src={"/logo.png"}
           alt="logo"
           width={200}
           height={200}
-          className="w-16 h-16 sm:w-24 sm:h-24"
+          className="object-cover max-w-12 max-h-12"
         />
       </div>
-      <div className="flex flex-col sm:flex-row sm:justify-center items-center w-full sm:w-auto">
-        <div className="flex flex-wrap gap-2 sm:gap-8 mb-4 sm:mb-0">
-          <Block
-            title={"Become a member"}
-            para={"Additional 0% off on stays."}
-          />
-          <Block
-            title={"OYO for business"}
-            para={"Trusted by 5000 corporates."}
-          />
-          <Block
-            title={"List your property"}
-            para={"Start earning in 30 min."}
-          />
-          <Block title={"987654321"} para={"Call us to book now."} />
-        </div>
-        <div className="flex  justify-center items-center">
-          <Image
-            src={"/demo.svg"}
-            alt="demo"
-            width={200}
-            height={200}
-            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full mr-2 sm:mr-5"
-          />
-          {auth ? (
-            <h3 className="font-bold cursor-pointer" onClick={handleLogout}>
-              Logout
-            </h3>
-          ) : (
-            <Link href={"/login"} className="font-bold">
-              Login / Signup
-            </Link>
-          )}
-        </div>
+      <div className="hidden lg:flex gap-12">
+        <Block title={"Become a member"} para={"Additional 0% off on stays."} />
+        <Block
+          title={"OYO for business"}
+          para={"Trusted by 5000 corporates."}
+        />
+        <Block title={"List your property"} para={"Start earning in 30 min."} />
+        <Block title={"987654321"} para={"Call us to book now."} />
       </div>
-    </div>
+      <button className="p-2 md:hidden" onClick={handleMenu}>
+        <FontAwesomeIcon icon={faBars} />
+      </button>
+
+      <div className="hidden md:flex md:justify-center md:items-center ">
+        <Image
+          src={"/demo.svg"}
+          alt="demo"
+          width={200}
+          height={200}
+          className="w-10 h-10 sm:w-12 sm:h-12 rounded-full mr-2 sm:mr-5 cursor-pointer"
+          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+        />
+        {auth ? (
+          <h3 className="font-bold cursor-pointer" onClick={handleLogout}>
+            Logout
+          </h3>
+        ) : (
+          <Link href={"/login"} className="font-bold">
+            Login / Signup
+          </Link>
+        )}
+      </div>
+      {/* Dropdown for small screens */}
+      {isDropdownOpen && (
+        <div className="md:hidden absolute top-full left-0 right-0 bg-white border border-gray-300 mt-1">
+          <div className="flex flex-col p-2">
+            <Block
+              title={"Become a member"}
+              para={"Additional 0% off on stays."}
+            />
+            <Block
+              title={"OYO for business"}
+              para={"Trusted by 5000 corporates."}
+            />
+            <Block
+              title={"List your property"}
+              para={"Start earning in 30 min."}
+            />
+            <Block title={"987654321"} para={"Call us to book now."} />
+          </div>
+          <div className="flex justify-center items-center">
+            {auth ? (
+              <h3 className="font-bold cursor-pointer" onClick={handleLogout}>
+                Logout
+              </h3>
+            ) : (
+              <Link href={"/login"} className="font-bold">
+                Login / Signup
+              </Link>
+            )}
+          </div>
+        </div>
+      )}
+    </nav>
   );
 };
 

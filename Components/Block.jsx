@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const Block = ({ title, para }) => {
   return (
-    <div className=" border-r border-gray-300 w-60 h-full px-3 max-w-screen-xl flex  items-center justify-between mx-auto p-4 sm:flex md:flex-auto">
+    <div className=" border-r border-gray-300 w-60 h-full px-3 max-w-screen-xl flex md:flex md:max-w-screen-sm  items-center justify-between mx-auto p-4 sm:flex md:flex">
       <Image
         src={"/demo.svg"}
         alt="demo"

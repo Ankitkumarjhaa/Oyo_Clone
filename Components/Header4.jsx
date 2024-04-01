@@ -24,7 +24,7 @@ const Header4 = () => {
         />
         <button
           type="submit"
-          className="w-full sm:w-auto rounded-lg h-12 sm:h-14 bg-red-500 text-sm sm:text-xl text-white cursor-pointer mt-2 sm:mt-0"
+          className="w-auto sm:w-auto rounded-lg h-12 sm:h-14 bg-red-500 text-sm sm:text-xl text-white cursor-pointer mt-2 sm:mt-0"
         >
           Notify
         </button>
